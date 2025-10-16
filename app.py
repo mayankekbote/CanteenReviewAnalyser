@@ -56,7 +56,7 @@ gcp_creds = st.secrets["gcp"]
 creds = ServiceAccountCredentials.from_json_keyfile_dict(gcp_creds, SCOPE)
 client = gspread.authorize(creds)
 
-SHEET_URL = "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit"  # Replace YOUR_SHEET_ID
+SHEET_URL = "https://docs.google.com/spreadsheets/d/1nQQXOPZiplwSBYl95F_D8cRaorUOMD3IsRJWVMZspEA/edit"  # Replace YOUR_SHEET_ID
 
 def append_to_gsheet(sheet_name, data_dict):
     """Append a new feedback entry to the specified Google Sheet tab."""
@@ -91,11 +91,11 @@ st.write("We'd love to hear about your dining experience!")
 with st.form("feedback_form"):
     col1, col2 = st.columns(2)
     with col1:
-        name = st.text_input("Full Name*", placeholder="e.g., Maria Garcia")
+        name = st.text_input("Full Name*", placeholder="e.g., Mayank Ekbote")
     with col2:
         phone = st.text_input("Phone Number*", placeholder="10 digits only", max_chars=10)
 
-    food = st.text_input("What did you have?*", placeholder="e.g., Truffle Pasta, Tiramisu")
+    food = st.text_input("What did you have?*", placeholder="e.g., Dahi Papdi Chat, Veg Chilly Rice")
     date_of_visit = st.date_input("Date of Visit*", max_value=datetime.today(), min_value=datetime(2020,1,1))
     review = st.text_area("Your Review*", height=120, help="Be honest! We read every review.")
 
