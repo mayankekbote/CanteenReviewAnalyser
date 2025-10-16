@@ -130,6 +130,6 @@ if submitted:
 
         st.markdown(
             f'<div class="success-box">🙌 Thank you, {name.split()[0] if name else "guest"}!<br>'
-            f'Your {sentiment.lower()} feedback has been submitted successfully.</div>',
+            f'Your feedback has been submitted successfully.</div>',
             unsafe_allow_html=True
         )
