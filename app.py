@@ -3,13 +3,14 @@ import pickle
 import pandas as pd
 from datetime import datetime
 import re
-from streamlit_gsheets import GSheetsConnection
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 # ----------------------------
 # CONFIG & STYLING
 # ----------------------------
 st.set_page_config(
-    page_title="🍽️ Bella Vista Feedback",
+    page_title="🍽️ VIT Canteen Feedback",
     page_icon="🍴",
     layout="centered"
 )
@@ -45,10 +46,26 @@ def load_models():
 classifier, vectorizer = load_models()
 
 # ----------------------------
-# GOOGLE SHEETS CONNECTION
+# GOOGLE SHEETS CONNECTION USING GSPREAD
 # ----------------------------
-conn = st.connection("gsheets", type=GSheetsConnection)
+SCOPE = ["https://spreadsheets.google.com/feeds",
+         "https://www.googleapis.com/auth/drive"]
+creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", SCOPE)
+client = gspread.authorize(creds)
+
 SHEET_URL = "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit"  
+
+def append_to_gsheet(sheet_name, data_dict):
+    """Append a new feedback entry to the specified Google Sheet tab."""
+    try:
+        sheet = client.open_by_url(SHEET_URL).worksheet(sheet_name)
+    except gspread.WorksheetNotFound:
+        # create sheet if it doesn't exist
+        sheet = client.open_by_url(SHEET_URL).add_worksheet(title=sheet_name, rows="1000", cols="20")
+        sheet.append_row(["Name", "Phone", "Food", "Date", "Review"])
+    
+    # Append the new row
+    sheet.append_row([data_dict["Name"], data_dict["Phone"], data_dict["Food"], data_dict["Date"], data_dict["Review"]])
 
 # ----------------------------
 # HELPERS
@@ -60,15 +77,6 @@ def predict_sentiment(text):
     X = vectorizer.transform([text]).toarray()
     pred = classifier.predict(X)[0]
     return "Positive" if pred == 1 else "Negative"
-
-def append_to_gsheet(sheet_name, data_dict):
-    """Append a new feedback entry to the specified Google Sheet tab."""
-    df_existing = conn.read(spreadsheet=SHEET_URL, worksheet=sheet_name)
-    if df_existing is None or df_existing.empty:
-        df_existing = pd.DataFrame(columns=["Name", "Phone", "Food", "Date", "Review"])
-    df_new = pd.DataFrame([data_dict])
-    df_updated = pd.concat([df_existing, df_new], ignore_index=True)
-    conn.update(spreadsheet=SHEET_URL, worksheet=sheet_name, data=df_updated)
 
 # ----------------------------
 # MAIN APP
