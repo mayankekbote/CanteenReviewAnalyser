@@ -46,18 +46,17 @@ def load_models():
 classifier, vectorizer = load_models()
 
 # ----------------------------
-# GOOGLE SHEETS CONNECTION USING STREAMLIT SECRETS
+# GOOGLE SHEETS CONNECTION USING SECRETS
 # ----------------------------
-gcp_creds = st.secrets["gcp"]
-gcp_creds["private_key"] = gcp_creds["private_key"].replace("\\n", "\n")  # fix newlines
-
 SCOPE = ["https://spreadsheets.google.com/feeds",
          "https://www.googleapis.com/auth/drive"]
 
+# Load GCP service account from Streamlit secrets
+gcp_creds = st.secrets["gcp"]
 creds = ServiceAccountCredentials.from_json_keyfile_dict(gcp_creds, SCOPE)
 client = gspread.authorize(creds)
 
-SHEET_URL = "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit"
+SHEET_URL = "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit"  # Replace YOUR_SHEET_ID
 
 def append_to_gsheet(sheet_name, data_dict):
     """Append a new feedback entry to the specified Google Sheet tab."""
