@@ -5,6 +5,7 @@ from datetime import datetime
 import re
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import json
 
 # ----------------------------
 # CONFIG & STYLING
@@ -46,25 +47,26 @@ def load_models():
 classifier, vectorizer = load_models()
 
 # ----------------------------
-# GOOGLE SHEETS CONNECTION USING GSPREAD
+# GOOGLE SHEETS CONNECTION USING STREAMLIT SECRETS
 # ----------------------------
+gcp_creds = st.secrets["gcp"]  # Make sure your secrets.toml has [gcp] section
+credentials_dict = json.loads(json.dumps(gcp_creds))
+
 SCOPE = ["https://spreadsheets.google.com/feeds",
          "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", SCOPE)
+creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict, SCOPE)
 client = gspread.authorize(creds)
 
-SHEET_URL = "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit"  
+SHEET_URL = "https://docs.google.com/spreadsheets/d/1nQQXOPZiplwSBYl95F_D8cRaorUOMD3IsRJWVMZspEA/edit?usp=sharing"
 
 def append_to_gsheet(sheet_name, data_dict):
     """Append a new feedback entry to the specified Google Sheet tab."""
     try:
         sheet = client.open_by_url(SHEET_URL).worksheet(sheet_name)
     except gspread.WorksheetNotFound:
-        # create sheet if it doesn't exist
         sheet = client.open_by_url(SHEET_URL).add_worksheet(title=sheet_name, rows="1000", cols="20")
         sheet.append_row(["Name", "Phone", "Food", "Date", "Review"])
     
-    # Append the new row
     sheet.append_row([data_dict["Name"], data_dict["Phone"], data_dict["Food"], data_dict["Date"], data_dict["Review"]])
 
 # ----------------------------
@@ -84,7 +86,6 @@ def predict_sentiment(text):
 st.title("🍽️ VIT Canteen Feedback")
 st.write("We'd love to hear about your dining experience!")
 
-# Feedback form
 with st.form("feedback_form"):
     col1, col2 = st.columns(2)
     with col1:
