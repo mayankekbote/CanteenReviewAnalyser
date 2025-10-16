@@ -1,6 +1,5 @@
 streamlit==1.49.1
-pandas
-scikit-learn
-numpy
-streamlit-gsheets
-streamlit-chat
+pandas>=2.0.0
+numpy>=1.25.0
+scikit-learn>=1.7.1
+streamlit-gsheets>=0.3.0
