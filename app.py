@@ -64,18 +64,7 @@ st.markdown("""
     }
 
     /* Secondary button (if any custom button is used) */
-    .stButton > button {
-        background-color: #E2E8F0 !important; /* Cool gray */
-        color: #1E293B !important;
-        border-radius: 8px !important;
-        font-weight: 500 !important;
-        border: none !important;
-        padding: 10px 20px !important;
-    }
-
-    .stButton > button:hover {
-        background-color: #CBD5E1 !important; /* Slightly darker gray on hover */
-    }
+   
 
     /* Success message box */
     .success-box {
