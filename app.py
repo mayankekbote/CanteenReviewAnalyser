@@ -17,20 +17,91 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    .main { background-color: #fdf6f0; }
-    h1 { color: #8B4513; text-align: center; font-family: 'Georgia', serif; }
+    /* Overall background */
+    .main { 
+        background-color: #F8FAFC; /* Soft bluish white */
+    }
+
+    /* Headings */
+    h1, h2, h3, h4, h5, h6 {
+        color: #1E293B; /* Dark slate blue-gray for readability */
+        text-align: center;
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* Text inputs, text areas, select boxes */
     .stTextInput > div > div > input,
     .stTextArea > div > div > textarea,
-    .stDateInput > div > div > input {
-        background-color: #fff8f0; border: 1px solid #d7ccc8; border-radius: 8px; padding: 10px;
+    .stSelectbox > div > div {
+        background-color: #FFFFFF;
+        border: 1px solid #CBD5E1; /* Soft gray border */
+        border-radius: 8px;
+        padding: 10px;
+        color: #1E293B;
     }
+
+    /* Primary submit button */
     .stFormSubmitButton button {
-        background-color: #8B4513; color: white; border: none; border-radius: 8px; padding: 12px 24px; font-weight: bold; width: 100%;
+        background-color: #3B82F6; /* Medium blue */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-weight: 600;
+        width: 100%;
+        transition: background-color 0.2s ease;
     }
-    .stFormSubmitButton button:hover { background-color: #A1887F; }
-    .success-box { background-color: #e8f5e9; color: #2e7d32; padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; margin-top: 20px; }
+
+    .stFormSubmitButton button:hover {
+        background-color: #2563EB; /* Slightly darker blue on hover */
+    }
+
+    /* Secondary button (if any custom button is used) */
+    .stButton > button {
+        background-color: #E2E8F0; /* Cool gray */
+        color: #1E293B;
+        border-radius: 8px;
+        font-weight: 500;
+        border: none;
+        padding: 10px 20px;
+    }
+
+    .stButton > button:hover {
+        background-color: #CBD5E1; /* Slightly darker gray on hover */
+    }
+
+    /* Success message box */
+    .success-box {
+        background-color: #D1FAE5; /* Light green tint */
+        color: #065F46; /* Deep green text */
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 600;
+        margin-top: 20px;
+        border: 1px solid #10B981; /* Emerald border */
+    }
+
+    /* Error / warning box */
+    .error-box {
+        background-color: #FEE2E2; /* Light red background */
+        color: #991B1B; /* Deep red text */
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 600;
+        margin-top: 20px;
+        border: 1px solid #EF4444;
+    }
+
+    /* Secondary text color */
+    p, label, span {
+        color: #64748B;
+        font-family: 'Inter', sans-serif;
+    }
 </style>
 """, unsafe_allow_html=True)
+
 
 # ----------------------------
 # LOAD MODELS
@@ -56,7 +127,7 @@ gcp_creds = st.secrets["gcp"]
 creds = ServiceAccountCredentials.from_json_keyfile_dict(gcp_creds, SCOPE)
 client = gspread.authorize(creds)
 
-SHEET_URL = "https://docs.google.com/spreadsheets/d/1nQQXOPZiplwSBYl95F_D8cRaorUOMD3IsRJWVMZspEA/edit"  # Replace YOUR_SHEET_ID
+SHEET_URL = "https://docs.google.com/spreadsheets/d/1nQQXOPZiplwSBYl95F_D8cRaorUOMD3IsRJWVMZspEA/edit" 
 
 def append_to_gsheet(sheet_name, data_dict):
     """Append a new feedback entry to the specified Google Sheet tab."""
