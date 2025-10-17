@@ -17,14 +17,20 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    /* Overall background */
-    .main { 
-        background-color: #F8FAFC; /* Soft bluish white */
+    /* Force background color for the entire app */
+    .stApp {
+        background-color: #F8FAFC !important; /* Soft bluish white */
+    }
+
+    /* Main container padding fix */
+    .main, .block-container {
+        background-color: #F8FAFC !important;
+        padding: 2rem 2rem 4rem 2rem;
     }
 
     /* Headings */
     h1, h2, h3, h4, h5, h6 {
-        color: #1E293B; /* Dark slate blue-gray for readability */
+        color: #1E293B !important; /* Dark slate blue-gray for readability */
         text-align: center;
         font-family: 'Inter', sans-serif;
     }
@@ -33,75 +39,76 @@ st.markdown("""
     .stTextInput > div > div > input,
     .stTextArea > div > div > textarea,
     .stSelectbox > div > div {
-        background-color: #FFFFFF;
-        border: 1px solid #CBD5E1; /* Soft gray border */
-        border-radius: 8px;
-        padding: 10px;
-        color: #1E293B;
+        background-color: #FFFFFF !important;
+        border: 1px solid #CBD5E1 !important; /* Soft gray border */
+        border-radius: 8px !important;
+        padding: 10px !important;
+        color: #1E293B !important;
     }
 
     /* Primary submit button */
     .stFormSubmitButton button {
-        background-color: #3B82F6; /* Medium blue */
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 12px 24px;
-        font-weight: 600;
-        width: 100%;
-        transition: background-color 0.2s ease;
+        background-color: #3B82F6 !important; /* Medium blue */
+        color: #FFFFFF !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 12px 24px !important;
+        font-weight: 600 !important;
+        width: 100% !important;
+        transition: background-color 0.2s ease !important;
     }
 
     .stFormSubmitButton button:hover {
-        background-color: #2563EB; /* Slightly darker blue on hover */
-        color:white;
+        background-color: #2563EB !important; /* Slightly darker blue on hover */
+        color: #FFFFFF !important;
     }
 
     /* Secondary button (if any custom button is used) */
     .stButton > button {
-        background-color: #E2E8F0; /* Cool gray */
-        color: #1E293B;
-        border-radius: 8px;
-        font-weight: 500;
-        border: none;
-        padding: 10px 20px;
+        background-color: #E2E8F0 !important; /* Cool gray */
+        color: #1E293B !important;
+        border-radius: 8px !important;
+        font-weight: 500 !important;
+        border: none !important;
+        padding: 10px 20px !important;
     }
 
     .stButton > button:hover {
-        background-color: #CBD5E1; /* Slightly darker gray on hover */
+        background-color: #CBD5E1 !important; /* Slightly darker gray on hover */
     }
 
     /* Success message box */
     .success-box {
-        background-color: #D1FAE5; /* Light green tint */
-        color: #065F46; /* Deep green text */
-        padding: 15px;
-        border-radius: 10px;
-        text-align: center;
-        font-weight: 600;
-        margin-top: 20px;
-        border: 1px solid #10B981; /* Emerald border */
+        background-color: #D1FAE5 !important; /* Light green tint */
+        color: #065F46 !important; /* Deep green text */
+        padding: 15px !important;
+        border-radius: 10px !important;
+        text-align: center !important;
+        font-weight: 600 !important;
+        margin-top: 20px !important;
+        border: 1px solid #10B981 !important; /* Emerald border */
     }
 
     /* Error / warning box */
     .error-box {
-        background-color: #FEE2E2; /* Light red background */
-        color: #991B1B; /* Deep red text */
-        padding: 15px;
-        border-radius: 10px;
-        text-align: center;
-        font-weight: 600;
-        margin-top: 20px;
-        border: 1px solid #EF4444;
+        background-color: #FEE2E2 !important; /* Light red background */
+        color: #991B1B !important; /* Deep red text */
+        padding: 15px !important;
+        border-radius: 10px !important;
+        text-align: center !important;
+        font-weight: 600 !important;
+        margin-top: 20px !important;
+        border: 1px solid #EF4444 !important;
     }
 
     /* Secondary text color */
     p, label, span {
-        color: #64748B;
-        font-family: 'Inter', sans-serif;
+        color: #64748B !important;
+        font-family: 'Inter', sans-serif !important;
     }
 </style>
 """, unsafe_allow_html=True)
+
 
 
 # ----------------------------
