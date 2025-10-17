@@ -47,21 +47,7 @@ st.markdown("""
     }
 
     /* Primary submit button */
-    .stFormSubmitButton button {
-        background-color: #3B82F6 !important; /* Medium blue */
-        color: #FFFFFF !important;
-        border: none !important;
-        border-radius: 8px !important;
-        padding: 12px 24px !important;
-        font-weight: 600 !important;
-        width: 100% !important;
-        transition: background-color 0.2s ease !important;
-    }
-
-    .stFormSubmitButton button:hover {
-        background-color: #2563EB !important; /* Slightly darker blue on hover */
-        color: #FFFFFF !important;
-    }
+    
 
     /* Secondary button (if any custom button is used) */
    
