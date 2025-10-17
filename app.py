@@ -54,6 +54,7 @@ st.markdown("""
 
     .stFormSubmitButton button:hover {
         background-color: #2563EB; /* Slightly darker blue on hover */
+        color:white;
     }
 
     /* Secondary button (if any custom button is used) */
